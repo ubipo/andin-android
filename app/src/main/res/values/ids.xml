@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="fab_layers_b2" type="id" />
+    <item name="fab_layers_b1" type="id" />
+    <item name="fab_layers_0" type="id" />
+    <item name="fab_layers_1" type="id" />
+    <item name="fab_layers_2" type="id" />
+    <item name="fab_layers_3" type="id" />
+    <item name="fab_layers_4" type="id" />
+    <item name="fab_layers_5" type="id" />
+</resources>

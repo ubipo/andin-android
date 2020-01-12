@@ -1,0 +1,30 @@
+query RoomQuery($uuid: String!) {
+    room(
+        uid: $uuid
+        wkb: true
+    ) {
+        building(wkb: true) {
+            uid,
+            name,
+            address {
+                free
+                locality
+                region
+                postcode
+                country
+            }
+            geometry {
+                wkb
+            },
+            rooms(wkb: true) {
+                uid,
+                level,
+                name,
+                ref,
+                geometry {
+                    wkb
+                }
+            }
+        }
+    }
+}

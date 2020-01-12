@@ -1,0 +1,35 @@
+query BuildingAndRoomsQuery($north: Float!, $south: Float!, $east: Float!, $west: Float!) {
+    buildings(
+        bbox: {
+            north: $north,
+            south: $south,
+            east: $east,
+            west: $west
+        }
+        wkb: true
+    ) {
+        building {
+            uid,
+            name,
+            address {
+                free
+                locality
+                region
+                postcode
+                country
+            }
+            geometry {
+                wkb
+            },
+            rooms(wkb: true) {
+                uid,
+                level,
+                name,
+                ref,
+                geometry {
+                    wkb
+                }
+            }
+        }
+    }
+}

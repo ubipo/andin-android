@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Andin</string>
+    <string name="mapbox_access_token">pk.eyJ1IjoicGlldGVyLWZpZXJzIiwiYSI6ImNrNHBneGg4ZzBsaGIzZnBsY2dkOHl6MHAifQ.OlGQsAeFwh5f_NjJsmI1dw</string>
+
+    <string name="ref_abrv">Ref</string>
+    <string name="address">Address</string>
+    <string name="search">Search</string>
+    <string name="app_label">Andin</string>
+    <string name="search_hint">Room name or ref</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="preferences">Preferences</string>
+</resources>

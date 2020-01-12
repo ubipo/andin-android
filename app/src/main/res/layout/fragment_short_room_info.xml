@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".view.fragments.support.ShortRoomInfoFragment">
+
+    <data>
+        <variable
+            name="room"
+            type="net.pieterfiers.andin.model.map.Room" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@android:color/white">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start|top"
+            android:text='@{room.labelText ?? "Unnamed room"}'
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textStyle='@{(room.ref == null &amp;&amp; room.name == null) ? "cursive" : "normal"}'
+            tools:text="Title" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@android:color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start|top"
+                android:text='@{@string/ref_abrv + ": "}'
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                tools:text="Ref" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start|top"
+                android:text='@{room.ref ?? "unknown"}'
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textStyle='@{room.ref == null ? "cursive" : "normal"}'
+                tools:text="Ref" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="start|top"
+            android:text='@{"Level: " + room.level}'
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            tools:text="Level" />
+
+    </LinearLayout>
+</layout>

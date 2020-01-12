@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/main"
+    app:startDestination="@id/mapFragment"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="net.pieterfiers.andin.view.fragments.MapFragment"
+        android:label="Andin"
+        tools:layout="@layout/fragment_map" >
+        <action
+            android:id="@+id/action_mapFragment_to_searchResultsFragment"
+            app:destination="@id/searchResultsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/searchResultsFragment"
+        android:name="net.pieterfiers.andin.view.fragments.SearchResultsFragment"
+        android:label="Results"
+        tools:layout="@layout/fragment_search_results" >
+        <action
+            android:id="@+id/action_searchResultsFragment_to_searchResultsMapFragment"
+            app:destination="@id/searchResultsMapFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/searchResultsMapFragment"
+        android:name="net.pieterfiers.andin.view.fragments.MapFragment"
+        android:label="Results"
+        tools:layout="@layout/fragment_map" >
+        <action
+            android:id="@+id/action_searchResultsMapFragment_to_searchResultsFragment"
+            app:destination="@id/searchResultsFragment"
+            app:popUpTo="@+id/searchResultsFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/preferencesFragment"
+        android:name="net.pieterfiers.andin.view.fragments.PreferencesFragment"
+        android:label="Preferences"
+        tools:layout="@layout/fragment_preferences"/>
+
+</navigation>

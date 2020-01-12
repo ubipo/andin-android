@@ -1,0 +1,23 @@
+query RoomsQuery($name: String!) {
+    rooms(
+        distanceFrom: {
+            place: "Leuven"
+            max: 100000
+        }
+        wkb: true
+        name: $name
+    ) {
+        room {
+            uid
+            name
+            ref
+            level
+            geometry {
+                wkb
+            }
+            building {
+                uid
+            }
+        }
+    }
+}
