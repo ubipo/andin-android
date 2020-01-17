@@ -2,7 +2,6 @@ package net.pieterfiers.andin
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
@@ -36,7 +35,7 @@ class SearchItemAdapter(val onClick: (room: Room) -> Unit) : RecyclerView.Adapte
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TextItemViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val view = layoutInflater.inflate(R.layout.search_item_view, parent, false) as ConstraintLayout
+        val view = layoutInflater.inflate(R.layout.view_search_results_item, parent, false) as ConstraintLayout
 
         return TextItemViewHolder(view)
     }

@@ -18,30 +18,47 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
+        <activity android:name=".ViewMapElementActivity">
 
-        <provider android:name=".MainSearchSuggestionProvider"
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <data
+                    android:host="andin.pieterfiers.net"
+                    android:pathPrefix="/room/"
+                    android:scheme="https" />
+            </intent-filter>
+
+        </activity>
+
+        <provider
+            android:name=".MainSearchSuggestionProvider"
             android:authorities="net.pieterfiers.andin.MainSearchSuggestionProvider" />
 
-        <activity android:name=".view.MainActivity"
+        <activity
+            android:name=".view.MainActivity"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <intent-filter>
-                <action android:name="net.pieterfiers.andin.ROOM" />
-                <category android:name="android.intent.category.DEFAULT"/>
-<!--                <data android:mimeType="text/plain"/>-->
-            </intent-filter>
-            <meta-data android:name="android.app.default_searchable"
+
+            <meta-data
+                android:name="android.app.default_searchable"
                 android:value=".SearchActivity" />
+
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
-            <meta-data android:name="android.app.searchable"
-                android:resource="@xml/searchable"/>
-        </activity>
 
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity>
     </application>
 
 </manifest>

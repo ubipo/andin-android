@@ -12,6 +12,16 @@
         <action
             android:id="@+id/action_mapFragment_to_searchResultsFragment"
             app:destination="@id/searchResultsFragment" />
+        <action
+            android:id="@+id/action_mapFragment_to_favoriteRoomsFragment"
+            app:destination="@id/favoriteRoomsFragment" />
+        <action
+            android:id="@+id/action_mapFragment_to_preferencesFragment"
+            app:destination="@id/preferencesFragment" />
+        <argument
+            android:name="home"
+            app:argType="boolean"
+            android:defaultValue="true" />
     </fragment>
 
     <fragment
@@ -32,8 +42,17 @@
         <action
             android:id="@+id/action_searchResultsMapFragment_to_searchResultsFragment"
             app:destination="@id/searchResultsFragment"
+            app:launchSingleTop="true"
             app:popUpTo="@+id/searchResultsFragment"
             app:popUpToInclusive="true" />
+        <argument
+            android:name="highlight_search_results"
+            app:argType="boolean"
+            android:defaultValue="true" />
+        <argument
+            android:name="home"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
 
     <fragment
@@ -41,5 +60,54 @@
         android:name="net.pieterfiers.andin.view.fragments.PreferencesFragment"
         android:label="Preferences"
         tools:layout="@layout/fragment_preferences"/>
+
+    <fragment
+        android:id="@+id/favoriteRoomsFragment"
+        android:name="net.pieterfiers.andin.view.fragments.FavoriteRoomsFragment"
+        android:label="Favorites"
+        tools:layout="@layout/fragment_favorite_rooms" >
+        <action
+            android:id="@+id/action_favoriteRoomsFragment_to_favoritesMapFragment"
+            app:destination="@id/favoritesMapFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/favoritesMapFragment"
+        android:name="net.pieterfiers.andin.view.fragments.MapFragment"
+        android:label="Favorites"
+        tools:layout="@layout/fragment_map" >
+
+        <action
+            android:id="@+id/action_favoritesMapFragment_to_favoriteRoomsFragment"
+            app:destination="@id/favoriteRoomsFragment" />
+        <action
+            android:id="@+id/action_favoritesMapFragment_to_searchResultsFragment"
+            app:destination="@id/searchResultsFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/searchResultsFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="highlight_favorites"
+            app:argType="boolean"
+            android:defaultValue="true" />
+        <argument
+            android:name="home"
+            app:argType="boolean"
+            android:defaultValue="false" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/sharedRoomFragment"
+        android:name="net.pieterfiers.andin.view.fragments.MapFragment"
+        android:label="Andin"
+        tools:layout="@layout/fragment_map" >
+
+        <argument
+            android:name="home"
+            app:argType="boolean"
+            android:defaultValue="false" />
+
+    </fragment>
 
 </navigation>

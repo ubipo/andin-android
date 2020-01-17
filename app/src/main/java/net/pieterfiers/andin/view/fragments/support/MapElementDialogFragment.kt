@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import androidx.fragment.app.Fragment
 import net.pieterfiers.andin.R
 import net.pieterfiers.andin.model.map.Building
 import net.pieterfiers.andin.model.map.Room
@@ -18,6 +19,7 @@ import kotlin.RuntimeException
 private const val ARG_MAP_ELEMENT = "map_element"
 
 class MapElementDialogFragment : BottomSheetDialogFragment() {
+
     private var mapElement: MapElement? = null
     var onCancelListener: (() -> Unit)? = null
 

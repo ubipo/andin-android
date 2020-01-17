@@ -1,18 +1,15 @@
 package net.pieterfiers.andin.view.fragments
 
-
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.ui.NavigationUI
 import net.pieterfiers.andin.MapViewModel
 
-import net.pieterfiers.andin.R
 import net.pieterfiers.andin.databinding.FragmentPreferencesBinding
 
 class PreferencesFragment : Fragment() {
@@ -31,7 +28,7 @@ class PreferencesFragment : Fragment() {
     ): View? {
         val binding = FragmentPreferencesBinding.inflate(inflater)
 
-        val toolbar = binding.myToolbar
+        val toolbar = binding.toolbar
         val activity = requireActivity() as AppCompatActivity
         activity.setSupportActionBar(toolbar)
         NavigationUI.setupActionBarWithNavController(activity, viewModel.navController)

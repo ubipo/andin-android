@@ -5,6 +5,7 @@
     <EditTextPreference
         app:key="api_hostname"
         app:title="Andin API host"
-        app:useSimpleSummaryProvider="true"/>
+        app:useSimpleSummaryProvider="true"
+        app:icon="@drawable/ic_prefs_sync" />
 
 </PreferenceScreen>

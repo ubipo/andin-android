@@ -13,23 +13,23 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
-import androidx.navigation.ui.NavigationUI
 import androidx.preference.PreferenceManager
 import com.andin_api.type.CustomType
 import com.apollographql.apollo.ApolloClient
+import com.google.android.material.snackbar.Snackbar
 import com.mapbox.mapboxsdk.maps.MapView
 import kotlinx.coroutines.*
 import kotlinx.coroutines.sync.Mutex
 import net.pieterfiers.andin.*
-import net.pieterfiers.andin.model.map.Room
 import net.pieterfiers.andin.databinding.ActivityMainBinding
+import net.pieterfiers.andin.db.AndinDb
+import net.pieterfiers.andin.db.getOrDownload
+import net.pieterfiers.andin.model.map.Room
+import net.pieterfiers.andin.view.fragments.MapFragment
 import net.pieterfiers.andin.view.fragments.support.SlippymapMapboxFragment
 import okhttp3.HttpUrl
-import java.lang.IllegalArgumentException
 import java.util.*
-import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.resume
 
 
@@ -38,8 +38,9 @@ const val EXTRA_ROOM_UUID = "net.pieterfiers.andin.view.EXTRA_ROOM_UUID"
 
 private const val DEFAULT_HOSTNAME = "home.ubipo.net"
 
-class MainActivity : SlippymapMapboxFragment.OnFragmentInteractionListener, AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    lateinit var view: View
     lateinit var map: MapView
     lateinit var viewModel: MapViewModel
 
@@ -54,7 +55,7 @@ class MainActivity : SlippymapMapboxFragment.OnFragmentInteractionListener, AppC
         when(intent.action) {
             Intent.ACTION_SEARCH -> handleSearchIntent(intent)
             Intent.ACTION_MAIN -> {}
-            Intent.ACTION_VIEW -> handleSearchIntent(intent)
+            Intent.ACTION_VIEW -> handleViewIntent(intent)
             null -> handleImplicitIntent(intent)
             else -> {
                 Log.e("AAA", "Received unknown intent!")
@@ -64,9 +65,22 @@ class MainActivity : SlippymapMapboxFragment.OnFragmentInteractionListener, AppC
         this.intent = null // Prevents triggering handleIntent() again next time
     }
 
+    private fun handleSearchIntent(intent: Intent) {
+        intent.getStringExtra(SearchManager.QUERY)?.also { query ->
+            handleSearch(query)
+        }
+    }
+
+    private fun handleViewIntent(intent: Intent) {
+        val query = intent.getStringExtra(SearchManager.QUERY)
+        if (query != null) {
+            handleSearch(query)
+        }
+    }
+
     private var searchIntentHandlerJob: Job? = null
     private val searchHandlerMutex = Mutex()
-    private fun handleSearchIntent(intent: Intent) {
+    private fun handleSearch(query: String) {
         val context = this
         GlobalScope.launch {
             searchHandlerMutex.lock() // Wait until prev launched
@@ -76,56 +90,56 @@ class MainActivity : SlippymapMapboxFragment.OnFragmentInteractionListener, AppC
                 searchHandlerMutex.unlock()
                 viewModel.searchResults.set(null)
                 viewModel.query.set(null)
-                intent.getStringExtra(SearchManager.QUERY)?.also { query ->
-                    viewModel.query.set(query)
-                    SearchRecentSuggestions(
-                        context,
-                        MainSearchSuggestionProvider.AUTHORITY,
-                        MainSearchSuggestionProvider.MODE
-                    ).saveRecentQuery(query, null)
-                    val curr = viewModel.navController.currentDestination?.id
-                    if (curr != R.id.searchResultsFragment) {
-                        val destination: Int
-                        if (curr == R.id.mapFragment) {
-                            destination = R.id.action_mapFragment_to_searchResultsFragment
-                        } else if (curr == R.id.searchResultsMapFragment) {
-                            destination =
-                                R.id.action_searchResultsMapFragment_to_searchResultsFragment
+                viewModel.query.set(query)
+                SearchRecentSuggestions(
+                    context,
+                    MainSearchSuggestionProvider.AUTHORITY,
+                    MainSearchSuggestionProvider.MODE
+                ).saveRecentQuery(query, null)
+                val curr = viewModel.navController.currentDestination?.id
+                if (curr != R.id.searchResultsFragment) {
+                    val destination: Int
+                    if (curr == R.id.mapFragment) {
+                        destination = R.id.action_mapFragment_to_searchResultsFragment
+                    } else if (curr == R.id.searchResultsMapFragment) {
+                        destination =
+                            R.id.action_searchResultsMapFragment_to_searchResultsFragment
+                    } else if (curr == R.id.favoritesMapFragment) {
+                        destination = R.id.action_favoritesMapFragment_to_searchResultsFragment
+                    } else {
+                        throw RuntimeException("No idea how to get to the results fragment from this destination")
+                    }
+                    lifecycleScope.launch {
+                        if (scope.isActive) {
+                            viewModel.navController.navigate(destination)
                         } else {
-                            throw RuntimeException("No idea how to get to the results fragment from this destination")
-                        }
-                        lifecycleScope.launch {
-                            if (scope.isActive) {
-                                viewModel.navController.navigate(destination)
-                            } else {
-                                Log.e("AAA", "Navigate after cancel")
-                            }
+                            Log.e("AAA", "Navigate after cancel")
                         }
                     }
-                    val errorHandler = { e: Exception ->
-                        if (e !is GqlException)
-                            throw e
-
-                        val builder = StringBuilder(e.message ?: "")
-                        var cause = e.cause
-                        while (cause != null) {
-                            builder.append(":\n${cause.message}")
-                            cause = cause.cause
-                        }
-                        dialog("Error searching for rooms", builder.toString())
-                    }
-                    val rooms = suspendCancellableCoroutine<List<Room>> { cont ->
-                        fetchRooms(
-                            viewModel.apolloClient,
-                            query,
-                            errorHandler
-                        ) { rooms ->
-                            cont.resume(rooms)
-                        }
-                    }
-                    if (scope.isActive)
-                        viewModel.searchResults.set(rooms)
                 }
+                val errorHandler = { e: Exception ->
+                    if (e !is GqlException)
+                        throw e
+
+                    val builder = StringBuilder(e.message ?: "")
+                    var cause = e.cause
+                    while (cause != null) {
+                        builder.append(":\n${cause.message}")
+                        cause = cause.cause
+                    }
+                    dialog("Error searching for rooms", builder.toString())
+                }
+                val rooms = suspendCancellableCoroutine<List<Room>> { cont ->
+                    fetchRooms(
+                        viewModel.apolloClient,
+                        query,
+                        errorHandler
+                    ) { rooms ->
+                        cont.resume(rooms)
+                    }
+                }
+                if (scope.isActive)
+                    viewModel.searchResults.set(rooms)
             }
         }
     }
@@ -160,12 +174,29 @@ class MainActivity : SlippymapMapboxFragment.OnFragmentInteractionListener, AppC
                 room.uuid == roomUUID
             }.firstOrNull() ?: throw RuntimeException("Room wasn't properly fetched")
             viewModel.selectedMapElement.set(room)
-            viewModel.currentLevel.set(room.level)
+            viewModel.desiredLevel.set(room.level)
         }
     }
 
     override fun onSupportNavigateUp(): Boolean {
+        if (viewModel.navController.currentDestination?.id == R.id.sharedRoomFragment) {
+            finish()
+            return true
+        }
         return viewModel.navController.navigateUp()
+    }
+
+    override fun onBackPressed() {
+        if (viewModel.navController.currentDestination?.id == R.id.sharedRoomFragment) {
+            finish()
+            return
+        }
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.navHostFragment)
+        val backStackEntryCount = navHostFragment?.childFragmentManager?.backStackEntryCount
+        if (backStackEntryCount == 0) {
+            return super.onBackPressed()
+        }
+        viewModel.navController.navigateUp()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -175,6 +206,14 @@ class MainActivity : SlippymapMapboxFragment.OnFragmentInteractionListener, AppC
         binding = DataBindingUtil.setContentView(this,
             R.layout.activity_main
         )
+        view = binding.root
+
+        viewModel.dao = AndinDb.getInstance(application).dao
+
+        val d = viewModel.dao
+
+        val all = d.getAll()
+        viewModel.favorites = all
 
         viewModel.navController = findNavController(R.id.navHostFragment)
 
@@ -415,10 +454,6 @@ class MainActivity : SlippymapMapboxFragment.OnFragmentInteractionListener, AppC
             dialog.show()
             openedDialogs.add(dialog)
         }
-    }
-
-    override fun onFragmentInteraction(uri: Uri) {
-
     }
 
     override fun onPause() {

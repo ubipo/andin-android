@@ -2,6 +2,7 @@ package net.pieterfiers.andin.model.mapbox
 
 import android.content.Context
 import android.graphics.Color
+import android.util.Log
 import androidx.core.graphics.ColorUtils
 import com.mapbox.mapboxsdk.plugins.annotation.Fill
 import com.mapbox.mapboxsdk.plugins.annotation.Symbol
@@ -42,21 +43,18 @@ fun Fill.updateStyle(room: Room, selected: Boolean = false) {
 fun getColor(context: Context, resource: Int): Int {
     val color: Int
     if (android.os.Build.VERSION.SDK_INT >= 23) {
-        color = context.resources.getColor(R.color.colorAccent, context.theme)
+        color = context.resources.getColor(resource, context.theme)
     } else {
         @Suppress("DEPRECATION")
-        color = context.resources.getColor(R.color.colorAccent)
+        color = context.resources.getColor(resource)
     }
     return color
 }
 
-fun Symbol.updateStyle(context: Context, mapElement: MapElement, selected: Boolean? = null, isSearchResult: Boolean? = null) {
+fun Symbol.updateStyle(context: Context, mapElement: MapElement, selected: Boolean? = null, isSearchResult: Boolean? = null, isFavorite: Boolean? = null) {
     textField = mapElement.labelText
     textColor = PropertyFactory.textColor(Color.WHITE).value
-    if (isSearchResult == true) {
-        textHaloColor = PropertyFactory.textColor(getColor(context, R.color.colorAccent)).value
-        textHaloWidth = PropertyFactory.textHaloWidth(1.2f).value
-    }
+    updateHighlight(context, isSearchResult, isFavorite)
 
 //    when(mapElement) {
 //        is Building -> updateStyle(mapElement, selected)
@@ -65,6 +63,19 @@ fun Symbol.updateStyle(context: Context, mapElement: MapElement, selected: Boole
 //            fillColor = PropertyFactory.fillColor(Color.MAGENTA).value
 //        }
 //    }
+}
+
+fun Symbol.updateHighlight(context: Context, isSearchResult: Boolean? = null, isFavorite: Boolean? = null) {
+    val search = isSearchResult == true; val fav = isFavorite == true
+    if (search || fav) {
+        val color = if (search) R.color.colorAccent else R.color.colorFavorite
+        val width = if (search) 1.2f else 0.5f
+        textHaloColor = PropertyFactory.textColor(getColor(context, color)).value
+        textHaloWidth = PropertyFactory.textHaloWidth(width).value
+    } else {
+        textHaloColor = PropertyFactory.textColor(Color.TRANSPARENT).value
+        textHaloWidth = PropertyFactory.textHaloWidth(0f).value
+    }
 }
 
 //fun Symbol.updateStyle(building: Building, selected: Boolean = false) {

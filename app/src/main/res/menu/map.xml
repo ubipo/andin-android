@@ -8,10 +8,7 @@
         android:title="@string/search"
         android:iconifiedByDefault="false"
         app:showAsAction="ifRoom|collapseActionView"
-        app:actionViewClass="android.widget.SearchView" />
-
-    <item
-        android:id="@+id/preferences"
-        android:title="@string/preferences" />
+        app:actionViewClass="android.widget.SearchView"
+        app:iconifiedByDefault="false" />
 
 </menu>

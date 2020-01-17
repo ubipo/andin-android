@@ -9,6 +9,6 @@ class MainSearchSuggestionProvider : SearchRecentSuggestionsProvider() {
 
     companion object {
         const val AUTHORITY = "net.pieterfiers.andin.MainSearchSuggestionProvider"
-        const val MODE: Int = SearchRecentSuggestionsProvider.DATABASE_MODE_QUERIES
+        const val MODE: Int = DATABASE_MODE_QUERIES
     }
 }
