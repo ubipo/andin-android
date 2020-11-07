@@ -6,6 +6,10 @@ Andin helps you navigate complicated buildings by providing a map of the buildin
 
 ![Banner](banner.png)
 
+## Download
+
+Andin is currently in closed beta. Contact me via [pieter@pfiers.net](mailto:pieter@pfiers.net) to access the preview build in the Google Play store.
+
 ## Screenshots
 
 Screenshot 1             |  Screenshot 2
