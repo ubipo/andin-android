@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/mapFragment"
-        android:name="net.pieterfiers.andin.view.fragments.MapFragment"
+        android:name="net.pfiers.andin.view.fragments.MapFragment"
         android:label="Andin"
         tools:layout="@layout/fragment_map" >
         <action
@@ -22,11 +22,26 @@
             android:name="home"
             app:argType="boolean"
             android:defaultValue="true" />
+        <argument
+            android:name="drie_dee"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <action
+            android:id="@+id/action_mapFragment_to_navSearchResultsFragment"
+            app:destination="@id/navSearchResultsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navSearchResultsFragment"
+        android:name="net.pfiers.andin.view.fragments.SearchResultsFragment"
+        android:label="Andin"
+        tools:layout="@layout/fragment_map" >
+
     </fragment>
 
     <fragment
         android:id="@+id/searchResultsFragment"
-        android:name="net.pieterfiers.andin.view.fragments.SearchResultsFragment"
+        android:name="net.pfiers.andin.view.fragments.SearchResultsFragment"
         android:label="Results"
         tools:layout="@layout/fragment_search_results" >
         <action
@@ -36,7 +51,7 @@
 
     <fragment
         android:id="@+id/searchResultsMapFragment"
-        android:name="net.pieterfiers.andin.view.fragments.MapFragment"
+        android:name="net.pfiers.andin.view.fragments.MapFragment"
         android:label="Results"
         tools:layout="@layout/fragment_map" >
         <action
@@ -53,17 +68,20 @@
             android:name="home"
             app:argType="boolean"
             android:defaultValue="false" />
+        <action
+            android:id="@+id/action_searchResultsMapFragment_to_navSearchResultsFragment"
+            app:destination="@id/navSearchResultsFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/preferencesFragment"
-        android:name="net.pieterfiers.andin.view.fragments.PreferencesFragment"
+        android:name="net.pfiers.andin.view.fragments.PreferencesFragment"
         android:label="Preferences"
         tools:layout="@layout/fragment_preferences"/>
 
     <fragment
         android:id="@+id/favoriteRoomsFragment"
-        android:name="net.pieterfiers.andin.view.fragments.FavoriteRoomsFragment"
+        android:name="net.pfiers.andin.view.fragments.FavoriteRoomsFragment"
         android:label="Favorites"
         tools:layout="@layout/fragment_favorite_rooms" >
         <action
@@ -73,7 +91,7 @@
 
     <fragment
         android:id="@+id/favoritesMapFragment"
-        android:name="net.pieterfiers.andin.view.fragments.MapFragment"
+        android:name="net.pfiers.andin.view.fragments.MapFragment"
         android:label="Favorites"
         tools:layout="@layout/fragment_map" >
 
@@ -94,12 +112,15 @@
             android:name="home"
             app:argType="boolean"
             android:defaultValue="false" />
+        <action
+            android:id="@+id/action_favoritesMapFragment_to_navSearchResultsFragment"
+            app:destination="@id/navSearchResultsFragment" />
 
     </fragment>
 
     <fragment
         android:id="@+id/sharedRoomFragment"
-        android:name="net.pieterfiers.andin.view.fragments.MapFragment"
+        android:name="net.pfiers.andin.view.fragments.MapFragment"
         android:label="Andin"
         tools:layout="@layout/fragment_map" >
 

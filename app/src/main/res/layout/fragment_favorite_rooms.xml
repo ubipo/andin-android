@@ -6,7 +6,7 @@
 
         <variable
             name="vm"
-            type="net.pieterfiers.andin.MapViewModel" />
+            type="net.pfiers.andin.MapViewModel" />
 
     </data>
 

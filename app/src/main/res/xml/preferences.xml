@@ -8,4 +8,16 @@
         app:useSimpleSummaryProvider="true"
         app:icon="@drawable/ic_prefs_sync" />
 
+    <CheckBoxPreference
+        app:key="allow_map_rotate"
+        app:title="Allow map rotation"
+        app:icon="@drawable/ic_rotate_grey"
+        app:defaultValue="true" />
+
+    <CheckBoxPreference
+        app:key="light_map"
+        app:title="Light map"
+        app:icon="@drawable/ic_eye"
+        app:defaultValue="true" />
+
 </PreferenceScreen>

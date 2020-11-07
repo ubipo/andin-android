@@ -2,13 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".view.fragments.SearchResultsFragment">
+    tools:context="net.pfiers.andin.view.fragments.SearchResultsFragment">
 
     <data>
 
         <variable
             name="vm"
-            type="net.pieterfiers.andin.MapViewModel" />
+            type="net.pfiers.andin.MapViewModel" />
 
     </data>
 
@@ -45,8 +45,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
+                    android:text="@string/start_typing_in_the_search_box_above"
+                    android:visibility='@{vm.query == null}' />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
                     android:text="@string/searching"
-                    android:visibility='@{vm.searchResults == null}' />
+                    android:visibility='@{vm.query != null &amp;&amp; vm.searchResults == null}' />
 
                 <TextView
                     android:layout_width="match_parent"

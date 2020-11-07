@@ -36,4 +36,18 @@
     <string name="close_drawer">Close drawer</string>
     <string name="no_favorites">You don\'t have any favorites yet, add some by tapping the ❤ icon when viewing a room</string>
     <string name="searching">Searching…</string>
+    <string name="open_in_app">Open in app</string>
+    <string name="in_app">In app</string>
+    <string name="technical_info">Technical info</string>
+    <string name="favorite_room">Favorite room</string>
+    <string name="navigate">Navigate</string>
+    <string name="share">Share</string>
+    <string name="depart_from_this_room">Depart from this room</string>
+    <string name="navigate_to_this_room">Navigate to this room</string>
+    <string name="departure">Departure:</string>
+    <string name="destination">Destination:</string>
+    <string name="currently_set_as">Currently set as:</string>
+    <string name="current_departure">Current departure: </string>
+    <string name="currently">Currently:</string>
+    <string name="start_typing_in_the_search_box_above">Start typing in the search box above</string>
 </resources>

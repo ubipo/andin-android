@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "artifactType": {
+    "type": "APK",
+    "kind": "Directory"
+  },
+  "applicationId": "net.pfiers.andin",
+  "variantName": "release",
+  "elements": [
+    {
+      "type": "SINGLE",
+      "filters": [],
+      "properties": [],
+      "versionCode": 2,
+      "versionName": "1.0.2",
+      "enabled": true,
+      "outputFile": "app-release.apk"
+    }
+  ]
+}

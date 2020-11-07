@@ -3,9 +3,23 @@ query RoomQuery($uuid: String!) {
         uid: $uuid
         wkb: true
     ) {
+        uid
+        name
+        ref
+        levelFrom
+        levelTo
+        roomType
+        toilet
+        drinkCoffee
+        firstAidKit
+        navGraphWalkableId
+        geometry {
+            wkb
+        }
         building(wkb: true) {
             uid,
             name,
+            navGraph,
             address {
                 free
                 locality
@@ -17,10 +31,46 @@ query RoomQuery($uuid: String!) {
                 wkb
             },
             rooms(wkb: true) {
-                uid,
-                level,
-                name,
-                ref,
+                uid
+                name
+                ref
+                levelFrom
+                levelTo
+                roomType
+                toilet
+                drinkCoffee
+                firstAidKit
+                navGraphWalkableId
+                geometry {
+                    wkb
+                }
+            }
+            corridors(wkb: true) {
+                uid
+                levelFrom
+                levelTo
+                navGraphWalkableId
+                geometry {
+                    wkb
+                }
+            }
+            entrances(wkb: true) {
+                uid
+                levelFrom
+                levelTo
+                navGraphPoiId
+                withinWalkable
+                geometry {
+                    wkb
+                }
+            }
+            fireSupressionTools(wkb: true) {
+                uid
+                levelFrom
+                levelTo
+                toolType
+                navGraphPoiId
+                withinWalkable
                 geometry {
                     wkb
                 }

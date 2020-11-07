@@ -5,14 +5,15 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'com.apollographql.apollo'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.2"
+    compileSdkVersion 30
+    buildToolsVersion "30.0.0"
+    ndkVersion
     defaultConfig {
-        applicationId "net.pieterfiers.andin"
-        minSdkVersion 21
-        targetSdkVersion 29
-        versionCode 1
-        versionName "1.0.1"
+        applicationId "net.pfiers.andin"
+        minSdkVersion 24
+        targetSdkVersion 30
+        versionCode 2
+        versionName "1.0.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
@@ -22,78 +23,156 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    packagingOptions {
+        exclude 'META-INF/robovm/ios/robovm.xml'
+    }
     compileOptions {
         targetCompatibility = 1.8
     }
-    dataBinding {
-        enabled = true
+    buildFeatures {
+        dataBinding = true
     }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+}
+
+configurations {
+    natives
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.1.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.core:core-ktx:1.3.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    testImplementation 'junit:junit:4.13'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     implementation 'androidx.recyclerview:recyclerview-selection:1.0.0'
-    implementation 'androidx.preference:preference:1.1.0'
+    implementation 'androidx.preference:preference:1.1.1'
 
     // geospatial
-    implementation 'org.locationtech.jts:jts-core:1.16.1'
-    implementation 'org.locationtech.jts:jts-io:1.16.1'
+    implementation 'org.locationtech.jts:jts-core:1.17.0'
+    implementation 'org.locationtech.jts:jts-io:1.17.0'
     implementation "org.locationtech.spatial4j:spatial4j:0.7"
+    implementation "net.sf.geographiclib:GeographicLib-Java:1.50"
+
+    // graph
+    implementation 'org.jgrapht:jgrapht-core:1.4.0'
+    implementation 'org.jgrapht:jgrapht-io:1.4.0'
+
+    // map
+    implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:9.2.1'
+    implementation 'com.mapbox.mapboxsdk:mapbox-android-plugin-annotation-v8:0.7.0'
     implementation "org.osmdroid:osmdroid-android:$osmdroid_version"
 
-    implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:8.5.0'
-    implementation 'com.mapbox.mapboxsdk:mapbox-android-plugin-annotation-v8:0.7.0'
-
+    // ui
     implementation "com.leinardi.android:speed-dial:3.1.1"
-    implementation "net.sf.geographiclib:GeographicLib-Java:1.50"
 
     // apollo (graphql orm)
     implementation "com.apollographql.apollo:apollo-runtime:$apollo_version"
     implementation "com.apollographql.apollo:apollo-android-support:$apollo_version"
 
     // coroutines
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.0"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.0"
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9-native-mt'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9-native-mt'
 
     // lifecycle
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.2.0-rc03'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.0-alpha07'
 
     // time backport
-    implementation "org.threeten:threetenbp:1.4.0"
+    implementation 'org.threeten:threetenbp:1.4.4'
 
     // nav
     implementation "android.arch.navigation:navigation-fragment-ktx:$navigationVersion"
     implementation "android.arch.navigation:navigation-ui-ktx:$navigationVersion"
     implementation "androidx.viewpager2:viewpager2:1.0.0"
 
+    // data
+    implementation 'com.beust:klaxon:5.4'
+
+    // gdx core
+    api "com.badlogicgames.gdx:gdx:$gdxVersion"
+
+    // gdx android
+    api "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
+    natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi"
+    natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a"
+    natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-arm64-v8a"
+    natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86"
+    natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86_64"
+    api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+    natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-armeabi"
+    natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-armeabi-v7a"
+    natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-arm64-v8a"
+    natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-x86"
+    natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-x86_64"
+
 
     // kotlin intellij
-    compileOnly("org.jetbrains:annotations:13.0")
-    testCompileOnly("org.jetbrains:annotations:13.0")
-    implementation 'com.google.guava:guava:28.2-android'
-    implementation 'androidx.room:room-runtime:2.2.3'
-    kapt "androidx.room:room-compiler:2.2.3"
-    annotationProcessor 'androidx.room:room-compiler:2.2.3'
-
+    compileOnly('org.jetbrains:annotations:13.0')
+    testCompileOnly('org.jetbrains:annotations:13.0')
+    implementation 'com.google.guava:guava:29.0-jre'
+    implementation 'androidx.room:room-runtime:2.2.5'
+    kapt "androidx.room:room-compiler:2.2.5"
+    annotationProcessor 'androidx.room:room-compiler:2.2.5'
 }
 
 apollo {
     generateKotlinModels = true
     customTypeMapping = [
             "Date"  : "java.util.Date",
-            "B64Wkb": "org.locationtech.jts.geom.Polygon",
-            "Wkt"   : "org.locationtech.jts.geom.Polygon",
+            "B64Wkb": "org.locationtech.jts.geom.Geometry",
+            "Wkt"   : "org.locationtech.jts.geom.Geometry",
             "UUID"  : "java.util.UUID"
     ]
+}
+
+
+// GDX Tasks
+
+// called every time gradle gets executed, takes the native dependencies of
+// the natives configuration, and extracts them to the proper libs/ folders
+// so they get packed with the APK.
+task copyAndroidNatives {
+    doFirst {
+        file("libs/armeabi/").mkdirs()
+        file("libs/armeabi-v7a/").mkdirs()
+        file("libs/arm64-v8a/").mkdirs()
+        file("libs/x86_64/").mkdirs()
+        file("libs/x86/").mkdirs()
+
+        configurations.natives.copy().files.each { jar ->
+            def outputDir = null
+            if (jar.name.endsWith("natives-arm64-v8a.jar")) outputDir = file("libs/arm64-v8a")
+            if (jar.name.endsWith("natives-armeabi-v7a.jar")) outputDir = file("libs/armeabi-v7a")
+            if(jar.name.endsWith("natives-armeabi.jar")) outputDir = file("libs/armeabi")
+            if(jar.name.endsWith("natives-x86_64.jar")) outputDir = file("libs/x86_64")
+            if(jar.name.endsWith("natives-x86.jar")) outputDir = file("libs/x86")
+            if(outputDir != null) {
+                copy {
+                    from zipTree(jar)
+                    into outputDir
+                    include "*.so"
+                }
+            }
+        }
+    }
+}
+
+tasks.whenTaskAdded { packageTask ->
+    if (packageTask.name.contains("package")) {
+        packageTask.dependsOn 'copyAndroidNatives'
+    }
 }

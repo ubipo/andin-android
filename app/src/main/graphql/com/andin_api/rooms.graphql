@@ -11,7 +11,13 @@ query RoomsQuery($name: String!) {
             uid
             name
             ref
-            level
+            levelFrom
+            levelTo
+            roomType
+            toilet
+            drinkCoffee
+            firstAidKit
+            navGraphWalkableId
             geometry {
                 wkb
             }

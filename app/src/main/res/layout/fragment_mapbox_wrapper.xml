@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:mapbox="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".view.fragments.support.MapElementDialogFragment">
+    tools:context="net.pfiers.andin.view.fragments.support.MapElementDialogFragment">
 
     <com.mapbox.mapboxsdk.maps.MapView
         android:id="@+id/map"
@@ -11,8 +11,6 @@
         android:layout_height="fill_parent"
         mapbox:mapbox_cameraTargetLat="50.8791"
         mapbox:mapbox_cameraTargetLng="4.7143"
-        mapbox:mapbox_cameraZoom="16"
-        mapbox:mapbox_uiRotateGestures="false"
-        />
+        mapbox:mapbox_cameraZoom="16" />
 
 </layout>

@@ -5,6 +5,10 @@
 
     <data>
 
+        <variable
+            name="room"
+            type="net.pfiers.andin.model.map.Room" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

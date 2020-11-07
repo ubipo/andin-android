@@ -5,9 +5,13 @@
 
     <data>
 
+        <import type="net.pfiers.andin.model.map.LvlKt" alias="Lvl" />
+
+        <import type="net.pfiers.andin.model.map.Toilet" />
+
         <variable
             name="room"
-            type="net.pieterfiers.andin.model.map.Room" />
+            type="net.pfiers.andin.model.map.Room" />
 
     </data>
 
@@ -32,12 +36,50 @@
             android:id="@+id/level"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text='@{"Level: " + room.level}'
+            android:layout_marginEnd="5dp"
+            android:text='@{"Level: " + Lvl.str(room.levelRange.from)}'
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/imageView4"
+            app:layout_constraintStart_toEndOf="@id/title"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Level" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="5dp"
+            android:visibility="@{room.toilet == Toilet.FEMALE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/imageView5"
+            app:layout_constraintStart_toEndOf="@id/level"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_map_toilet_female" />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="5dp"
+            android:visibility="@{(room.toilet != null &amp;&amp; room.toilet != Toilet.FEMALE)}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/imageView6"
+            app:layout_constraintStart_toEndOf="@id/imageView4"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_map_toilet_male" />
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="5dp"
+            android:visibility="@{room.drinkCoffee}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imageView5"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_map_coffee" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

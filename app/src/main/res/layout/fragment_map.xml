@@ -5,9 +5,11 @@
 
     <data>
 
+        <import type="net.pfiers.andin.model.map.LvlKt" alias="Lvl" />
+
         <variable
             name="vm"
-            type="net.pieterfiers.andin.MapViewModel" />
+            type="net.pfiers.andin.MapViewModel" />
 
     </data>
 
@@ -31,11 +33,24 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:popupTheme="@style/ToolbarPopupTheme"
-                app:subtitle='@{vm.currentLevel != null ? "Level: " + vm.currentLevel : null}' />
+                app:subtitle='@{vm.currentLevel != null ? "Level: " + Lvl.str(vm.currentLevel) : null}' />
 
-            <fragment
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/drieDeeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="4dp"
+                android:layout_marginVertical="-1dp"
+                android:src="@drawable/ic_3d"
+                android:tint="#ffffff"
+                android:visibility="visible"
+                app:backgroundTint="@color/colorFavorite"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:useCompatPadding="true" />
+
+            <FrameLayout
                 android:id="@+id/slippymapFragment"
-                android:name="net.pieterfiers.andin.view.fragments.support.SlippymapFragment"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"

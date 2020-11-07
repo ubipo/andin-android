@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".view.fragments.support.ShortRoomInfoFragment">
+    tools:context="net.pfiers.andin.view.fragments.support.ShortRoomInfoFragment">
 
     <data>
         <variable
             name="building"
-            type="net.pieterfiers.andin.model.map.Building" />
+            type="net.pfiers.andin.model.map.Building" />
     </data>
 
     <LinearLayout

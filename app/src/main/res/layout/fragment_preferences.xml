@@ -25,7 +25,7 @@
 
         <fragment
             android:id="@+id/recycler"
-            android:name="net.pieterfiers.andin.view.fragments.support.PreferencesContentFragment"
+            android:name="net.pfiers.andin.view.fragments.support.PreferencesContentFragment"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"

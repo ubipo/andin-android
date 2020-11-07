@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".view.fragments.support.MapElementDialogFragment">
+    tools:context="net.pfiers.andin.view.fragments.support.MapElementDialogFragment">
 
     <data>
 
         <variable
             name="mapElement"
-            type="net.pieterfiers.andin.model.map.MapElement" />
+            type="net.pfiers.andin.model.map.MapElement" />
 
     </data>
 
@@ -23,13 +23,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="start|top"
-            android:text='@{"UUID: " + mapElement.uuid.toString()}'
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            tools:text="Technical info" />
+<!--        <TextView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:gravity="start|top"-->
+<!--            android:text='@{"UUID: " + mapElement.uuid.toString()}'-->
+<!--            android:textAppearance="@style/TextAppearance.AppCompat.Body1"-->
+<!--            tools:text="Technical info" />-->
 
     </LinearLayout>
+
 </layout>
